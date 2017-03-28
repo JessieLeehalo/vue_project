@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Components</title>
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- <div id="example">
+      <my-component></my-component>
+    </div> -->
+    <div id="example-2">
+      <simple-counter></simple-counter>
+      <simple-counter></simple-counter>
+      <simple-counter></simple-counter>
+    </div>
+    <script type="text/javascript">
+/*
+    Vue.component('my-component', {
+      template: '<div>A custom component</div>'
+    })
+
+    new Vue({
+      el: '#example'
+    })
+*/
+    var data = { counter: 0 }
+
+    Vue.component('simple-counter', {
+      template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+      //must be '' instead of ""
+      data: function () {
+        return {
+          counter: 0
+        }
+      }
+    })
+    new Vue({
+      el: '#example-2'
+    })
+    </script>
+  </body>
+</html>
