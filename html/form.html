@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Form</title>
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <my-component>
+        <h1>First line content</h1>
+      </my-component>
+      <my-component>
+      </my-component>
+      <template id="myComponent">
+        <div class="content">
+          <h2>Second line content</h2>
+          <slot>I will show up</slot>
+          <p>Say something...</p>
+        </div>
+      </template>
+    </div>
+   <script type="text/javascript">
+     Vue.component('my-component', {
+       template: '#myComponent'
+     })
+     new Vue({
+       el: "#app"
+     })
+   </script>
+  </body>
+</html>
