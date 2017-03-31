@@ -3,10 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>Form</title>
+    <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
     <script src="http://unpkg.com/vue/dist/vue.js"></script>
   </head>
   <body>
-    <div id="app">
+    <div id="toggle-render">
+      <button @click="show = !show">Toggle Render</button>
+      <transition
+        name="custom-classes-transition"
+        enter-active-class="animated tada"
+        leave-active-class="animated bounceOutRight"
+      >
+        <p v-if="show">Hello</p>
+      </transition>
+    </div>
+    <div id="toggle-v">
+      <button @click="show = !show">
+        Toggle
+      </button>
+      <transition
+        v-on:before-enter="beforeEnter"
+        v-on:enter="enter"
+        v-on:leave="leave"
+        v-on:css="false"
+      >
+        <p v-if="show">
+          Show up!
+        </p>
+      </transition>
+    </div>
+    <!-- <div id="app">
       <my-component>
         <h1>First line content</h1>
       </my-component>
@@ -19,13 +46,46 @@
           <p>Say something...</p>
         </div>
       </template>
-    </div>
+    </div> -->
    <script type="text/javascript">
      Vue.component('my-component', {
        template: '#myComponent'
      })
      new Vue({
        el: "#app"
+     })
+
+     new Vue({
+       el: "#toggle-render",
+       data: {
+         show: true
+       }
+     })
+     new Vue({
+       el: "#toggle-v",
+       data: {
+         show: false
+       },
+       methods: {
+         beforeEnter: function (el) {
+           el.style.opacity = 0
+           el.style.transformOrigin = 'left'
+         },
+        enter: function (el, done) {
+          Velocity(el, { opacity: 1, fontsize: '1.4em' }, { duration: 300 })
+          Velocity(el, { fontsize: '1em' }, { complete: done })
+        },
+        leave: function (el, done) {
+          Velocity(el, { translateX: '15px', rotateZ: '100deg' }, { duration: 600 })
+          Velocity(el, { rotateZ: '100deg'}, { loop: 2 })
+          Velocity(el, {
+            rotateZ: '450deg',
+            translateY: '30px',
+            translateX: '30px',
+            opacity: 0
+          }, { complete: done })
+        }
+       }
      })
    </script>
   </body>
